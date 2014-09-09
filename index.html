@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <style>
+      body { text-align: center; white-space: pre-line; }
+      .element { display: inline-block; width: 400px; min-height:1em; color: #333; background-color: #ccc; padding: 1em; white-space: normal; }
+      #elem00 { background-color: #99CCFF; }
+      #elem01 { background-color: #FFCCFF; }
+      #elem02 { background-color: #FFFF99; }
+      #elem03 { background-color: #FF9966; }
+      #elem04 { background-color: #9999FF; }
+    </style>
+
+    <!-- 
+    Iniziamo col dire a cosa ci serve JS: 
+    Js permette delle trasformazioni della pagina "lato client", ossia tramite l'interpretazione del browser del codice. E' quindi un codice che viene prima spedito al browser e poi interpretato, inversamente da PHP.
+    In parole poverissime, JS farà "agire" la nostra pagina nei modi in cui vogliamo.
+    Controllerà campi, farà azioni in risposta ad input (tra cui stimoli dell'utente), cambierà css, misure, stati, caricherà dati.. e mille altre cose.
+
+    Per farlo in modo comodo, useremo JQuery (abbrevio in JQ).
+
+    JQ infatti non è altro che un framework di javascript (abbrevio in JS) che ti permette di aggiungere delle funzionalità in più o di scrivere delle particolari sintassi in pochissime righe invece di impazzire a "reinventare ogni volta l'acqua calda" scrivendo papironi in puro JS.
+    Riassumendo: scriveremo in JS utilizzando all'occorrenza le sintassi JQ, ogni qualvolta la cosa ci sia utile o comoda. Sarà la libreria Jq a "tradurre" la nostra sintassi in puro JS e farla interpretare al browser.
+
+    Come è possibile notare dal file che importeremo, la sua estensione è .js: semplice JS! :)
+
+    Per prima cosa, richiamiamo la libraria JQ: verrà importato il file che contiene tutte le funzioni che ci servino per lavorare con JQ.
+    
+
+    Per l'importazione, possiamo scegliere due vie.
+
+    1) Importare da un link in remoto, per esempio qui:
+    https://developers.google.com/speed/libraries/devguide#jquery
+    Vantaggi: leggerezza, in quanto il codice non risiede sulla tua macchina (anche se il peso, in effetti, non è molto!). inoltre se trovi un link in 
+    Svantaggi: se il link della sorgente cambia, sei fritto. Di solito Google però non è così maligna ;)
+
+    2) Copiare e linkare in locale la libreria, scaricata all'indirizzo 
+    http://jquery.com/download/
+    Vantaggi : se il tuo sito è online, lo è anche jquery! nessun rischio che la sorgente si sleghi dal tuo progetto. 
+    Svantaggi : è sempre un file in più.. scarica, importa, upload.. uff!
+
+    In ogni caso, sono validi entrambi i sistemi, no panic! per semplicità però, ora importo il link di Google.
+    -->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- bene! DA QUESTA RIGA IN POI, se scrivo un codice con la sintassi JQ, mi verrà interpretata in modo corretto! yeah! 
+    Mi raccomando: la libreria JQ è da importare PRIMA di qualsiasi codice scritto con sintassi JQ.
+    
+    Sempre per semplicità, ora scriverò il codice JS/JQ qui sotto in un tag <script>, ma la cosa migliore, come sempre, è quella di linkare un file esterno, per esempio "script.js", in cui scrivere liberamente. (Idem per lo stile CSS, nel tag style).
+    -->
+
+    <script>
+
+    /* 
+      All'interno di un codice JS, i commenti si possono scrivere in due modi:
+      Con la sintassi di CSS, che permette commenti su tante righe, 
+      oppure... 
+    */
+
+    // con questa seconda sintassi, commento a riga singola.
+
+    // partiamo ora con il primo punto della nostra guida JQ.
+
+    /*     
+    -----------------------------------
+    1) DESIGNER <3 JQUERY
+
+    La cosa che ha fatto innamorare i web designer ( solitamente incapaci di programmare ) di JQ, è il modo in cui gli elementi vengono richiamati.
+
+    Mi spiego meglio: 
+    JS(e JQ), nel loro "agire sulla pagina", non fanno altro che "richiamare" (o prendere, in inglese GET ) un elemento, che può essere un div, un input o la stessa finestra del browser, e agire su di lui.
+    Per farlo in JS pure, se dovessimo richiamare un elemento con ID "foo" dovremmo scrivere:
+
+      document.getElementById("foo")
+
+    tradotto: navighiamo il DOM dicendo che nel documento (pagina) dobbiamo prendere (sempre GET) un elemento che ha ID foo.
+
+    Mentre in jquery scriviamo solo:
+
+      $('#foo')
+
+    il " $ " è l'abbreviazione della "chiamata JQuery": dichiariamo semplicemente che stiamo per usare una funzione scritta in JQ, che quindi la libreria deve rielaborare.
+    scrivere $('#foo') o jQuery('#foo') è identico.
+    Dentro le parentesi vediamo una cosa che ci è molto familiare: è la sintassi CSS!!!
+    JQ si "naviga" utilizzando la sintassi CSS! 
+    WOHOO! FIGO NO? :P
+    Soprattutto quando devi richiamare cose simili...
+
+    $('#mainMenu ul li:first-child li a')
+
+    in JS sarebbe un bagno di sangue.
+
+    -----------------------------------
+    2) FUNZIONIAMO!
+
+    (Ok, questa era brutta come battuta.)
+
+    Scriviamo la nostra prima funzione. 
+    Questo è JS puro, ma ci servirà comprendere la sintassi.
+    
+    Decommenta il prossimo commento.
+    */
+
+    /*
+      function hello() {
+        alert('CIAO MONDO!');
+      }
+
+      hello();
+    */
+
+    /*
+    Simile a php, uh? Yes, verissimo.
+    
+    ecco cosa ho fatto: dichiaro che scrivo una funzione, le do un nome e le parentesi che eventualmente ospitano degli argomenti, poi nelle graffe scrivo un codice ( alert() crea una finestra di alert nel browser ) e negli argomenti dell'alert metto la mia stringa di testo.
+    Chiusa la funzione, la richiamo e questa viene eseguita.
+
+    Aspetta: perchè viene eseguita?!
+
+    perchè il codice Js che ho scritto viene processato "a cascata", come fosse un CSS. quando appare in pagina, viene eseguito.
+
+    per dei codici esterni alla pagina ed in Jq, avremo dei comportamenti un po' differenti, ma li vedremo più avanti.
+
+    ricommenta il codice di prima e decommenta il seguente:
+
+    */
+
+    /*
+      function hello(text) {
+        alert(text);
+      }
+
+      hello('CIAO MONDO ... ancora!');
+    */
+
+    /*
+    Il risultato è uguale allo script di prima , ma ho messo la stringa di testo in un argomento (text) della funzione.
+    Utile no? tieni decommentato il codice di prima e decommenta anche questo:
+    */
+
+    /*
+      hello('Beh?');
+    */
+
+    /*
+      Due bellissimi e fastidiosissimi alert uno via l'altro! 
+      La stessa funzione, diversi argomenti, diverso risultato.
+
+      Ricommenta tutto o diventerai matto ad ogni refresh di pagina. 
+
+      PROSEGUIAMO!
+
+    -----------------------------------
+    3) FUNZIONIAMO ...IN JQ!
+
+    (non la smetto.)
+      
+    Nel codice HTML, decommenta il div #elem00.
+    Ricarica la pagina e clicca sull'elemento. Toh! Scompare :P
+    
+    come vediamo, in OnClick dell'elemento richiamiamo: 
+
+    $('#elem00').hide();
+
+    Dove .hide() è la nostra prima funzione JQ.
+    Basta applicarla ad un elemento perchè questo scompaia!
+    Guarda l'inspect del codice: è stata applicato display:none all'elemento!
+
+    Ricommenta il div e continuiamo.
+    
+    Ricordi laregola per cui è smepre meglio tenere il CSS staccato dall'HTML?
+    Vale anche per JS/JQ.
+
+    Eseguiamo quindi la stessa operazione di prima ma tramite JQ, esternamente rispetto all' OnClick del tag. Decommenta il codice qui sotto e l'elemento #elem01.
+
+    */
+    
+    /*
+
+    $('document').ready( 
+
+      function() {
+
+        $('#elem01').hide();
+
+      }
+
+    );
+
+    */
+
+    /*
+    Al refresh del browser, l'elemento sparirà automaticamente. 
+    No panic, per ora va bene così.
+    
+    Leggiamo il codice sin ora scritto:
+
+    $('document').ready(); è l'azione che ci dice che il momento in cui il nostro codice deve avviarsi è appena la pagina è pronta a iniziare ad interpretare il codice.
+    in questa, mettiamo una function() generica che conterrà tutto il nostro codice onready!
+
+    Infatti, vediamo all'interno
+      $('#elem01').hide();
+    che è identico alla chiamata ad .hide() che abbiamo usato in precedenza.
+
+    complichiuamolo un pò e facciamolo funzionare per bene. Commenta  il codice di prima e decommenta questo:
+    */
+
+//    /*
+
+    $('document').ready( function() {
+
+        $('#elem01').click( function() {
+
+          $(this).hide();
+
+        });
+
+    } );
+    
+ //   */
+
+
+
+    </script>
+
+  </head>
+  
+  <body>
+
+    <p>Per leggere la guida, apri il file in un editor.. trovi tutto nei commenti! :) </p>
+
+    <!--<div id="elem00" onclick="$('#elem00').hide();" class="element">IO MI NASCONDO ONCLICK!</div>-->
+
+    <div id="elem01" class="element">ANCHE IO MI NASCONDO AL CLICK!</div>
+
+    <!--<div id="elem02" class="element">OGGETTO CHE CAMBIA COLORE ONREADY</div>-->
+
+    <!--<div id="elem03" class="element">OGGETTO CHE SI DUPLICA</div>-->
+
+    <!--<div id="elem04" onclick="$(this).hide();" class="element">IO MI NASCONDO ONCLICK, E USO "THIS"!</div>-->
+
+  </body>
+
+</html>
