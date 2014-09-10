@@ -10,6 +10,7 @@
       #elem02 { background-color: #FFFF99; }
       #elem03 { background-color: #FF9966; }
       #elem04 { background-color: #9999FF; }
+      #elem05 { background-color: #9999FF; }
     </style>
 
     <!-- 
@@ -197,17 +198,22 @@
     
     Leggiamo il codice sin ora scritto:
 
-    $('document').ready(); è l'azione che ci dice che il momento in cui il nostro codice deve avviarsi è appena la pagina è pronta a iniziare ad interpretare il codice.
-    in questa, mettiamo una function() generica che conterrà tutto il nostro codice onready!
+    $('document').ready(); è l'azione che ci dice che il momento in cui il nostro codice deve essere eseguito è appena la pagina è pronta a iniziare ad interpretare il codice.
+    Dentro questa azione "ready"," scriviamo una function() che conterrà tutto il nostro codice da eseguire, appunto, "on ready".
 
-    Infatti, vediamo all'interno
+    Infatti, vediamo all'interno:
       $('#elem01').hide();
     che è identico alla chiamata ad .hide() che abbiamo usato in precedenza.
 
-    complichiuamolo un pò e facciamolo funzionare per bene. Commenta  il codice di prima e decommenta questo:
+    complichiuamolo un pò e facciamolo funzionare per bene. 
+
+    -----------------------------------
+    4) THIS
+
+    Commenta  il codice di prima e decommenta questo:
     */
 
-//    /*
+    /*
 
     $('document').ready( function() {
 
@@ -219,8 +225,99 @@
 
     } );
     
- //   */
+    */
 
+    /*
+    
+    Provalo, funzionerà perfettamente.
+
+    Qui ci troviamo davanti ad un nuovo concetto: il THIS.
+
+    THIS (= questo) è come il soggetto sottointeso della lingua italiana.
+    Serve per non riscrivere ogni volta l'elemento "soggetto di una funzione".
+
+    Cerchiamo ora, alla luce di questa conoscenza, di leggere il codice che abbiamo scritto:
+
+    Quando la pagina sarà pronta ad interpretare codice, e veddà cliccato l'elemento con ID elem01, QUESTO dovrà scomparire.
+
+    Bello eh? ;)
+    All'interno della funzione click, ogni volta che mi troverò un elemento chiamato THIS, saprò che si riferisce a elem01.
+
+    Prova questo codice, decommentandolo e decommentando anche elem01 e elem02:
+
+
+    */
+
+
+    /*
+    $('document').ready( function() {
+
+        $('#elem01').click( function() {
+
+          $(this).hide();
+
+        });
+
+        $('#elem02').click( function() {
+
+          $(this).hide();
+
+        });
+
+    } );
+
+    */
+
+    /*
+
+    ..qui il primo THIS sarebbe riferito a elem01, il secondo ad elem02.
+
+
+    -----------------------------------
+    5) SCOPE
+
+    SCOPE ( = ambito, riferimento, in inglese ) indica A COSA il this si riferisce.
+
+    vediamo un esempio.
+
+    Tieni decommentato solo elem 02, commenta il codice precedente e decommenta questo:
+
+    */
+
+//    /*
+
+    $('document').ready( function() {
+
+        $('#elem02').click( function() {
+
+          $(this).find('strong').each( function() {
+
+            $(this).hide();
+
+          });
+
+        });
+
+    } );
+
+//    */
+
+    /*
+
+    Vedrai che nell'elemento elem02 sparirà solo la parola SCOPE.
+
+    Leggiamo il codice relativo all'azione su elem02:
+
+    "Quando faccio click su elem02, allonterno di QUESTO (this), CERCA (.find) i tag STRONG. per OGNI VOLTA CHE NE TROVI UNO (.each), nascondiLO (this)(.hide) . "
+
+    Quindi il primo THIS ha come SCOPE la funzione .click su elem02, il secondo THIS ha come SCOPE gli elementi STRONG all'interno dell'elem02.
+    E' come un gioco di scatole cinesi.
+
+    .click , .find , .each , .hide e le altre funzioni JQ le trovi qui:
+
+    http://api.jquery.com/
+
+    */
 
 
     </script>
@@ -233,13 +330,10 @@
 
     <!--<div id="elem00" onclick="$('#elem00').hide();" class="element">IO MI NASCONDO ONCLICK!</div>-->
 
-    <div id="elem01" class="element">ANCHE IO MI NASCONDO AL CLICK!</div>
+    <!--<div id="elem01" class="element">ANCHE IO MI NASCONDO AL CLICK!</div>-->
 
-    <!--<div id="elem02" class="element">OGGETTO CHE CAMBIA COLORE ONREADY</div>-->
+    <div id="elem02" class="element">IO TI SPIEGO IL <strong>CONCETTO</strong> DI <strong>"SCOPE"</strong></div>
 
-    <!--<div id="elem03" class="element">OGGETTO CHE SI DUPLICA</div>-->
-
-    <!--<div id="elem04" onclick="$(this).hide();" class="element">IO MI NASCONDO ONCLICK, E USO "THIS"!</div>-->
 
   </body>
 
